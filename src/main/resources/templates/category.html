@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SimMeg</title>
+
+    <script th:src="@{static/js/jquery.min.js}"></script>
+    <script th:src="@{static/js/bootstrap.min.js}"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{static/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <!--<link href="css/jumbotron-narrow.css" rel="stylesheet">-->
+    <link th:href="@{static/css/justified-nav.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+    <div class="masthead">
+        <h2 class="text-muted">SimMeg</h2>
+        <nav>
+            <ul class="nav nav-justified">
+                <li class="active"><a th:href="@{/}">首页</a></li>
+                <!--固定分类-->
+                <li><a th:href="@{/category(name=yule)}">娱乐</a></li>
+                <li><a th:href="@{/category(name=junshi)}">军事</a></li>
+                <li><a th:href="@{/category(name=keji)}">科技</a></li>
+                <li><a th:href="@{/category(name=shehui)}">社会</a></li>
+                <li>
+                    <div class="btn-group" style="width: 1% ">
+                        <button style="border: 0px;color: #777;font-weight: bold;background-image: linear-gradient(to bottom, #f5f5f5 0%,#e5e5e5 100%);margin-left: 90px"
+                                type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            更多<span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" th:each="category:${categoryList}">
+                            <!--todo 请求遍历其他分类（获得url以及分类名，通过这个url可以拿到该分类的新闻list）-->
+                            <li><a th:href="@{/category(name=${category.name})}" th:text="${category.name}"></a></li>
+                        </ul>
+                    </div>
+
+                </li>
+            </ul>
+        </nav>
+        <!-- Single button -->
+
+    </div>
+
+
+    <!--todo 这里显示该分类下每一条新闻，到最后有一个获取更多新闻的按钮 -->
+
+    <div class="jumbotron" id="container" th:each="news:${page.getContent()}">
+        <div id="news_img" class="pull-left"><img src="img/test.png"></div>
+        <h2><a id="news_title" th:href="@{/news/detail(id=${news.id})}" th:text="${news.title}"> Marketing stuff!</a></h2>
+        <p id="news_content" class="lead" th:text="${news.content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo</p>
+        <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>-->
+    </div>
+    <!--todo 这里要测试-->
+    <div class="jumbotron" id="container_more" th:object="${page}">
+        <!--todo 分页器+spring data分页器接口org.springframework.data.domain.Page -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li data-th-classappend="*{first} ? 'disabled' : ''">
+                    <a href="javascript:void(0);" data-th-attr="pageIndex=${page.number} - 1" aria-label="Previous">
+                        <span aria-hidden="true">«</span>
+                    </a>
+                </li>
+
+                <!-- 迭代生成页码 -->
+                <li data-th-each="i : ${#numbers.sequence(1, page.totalPages)}"
+                    data-th-classappend="${(page.number + 1) eq i} ? 'active' : ''" >
+                    <a class="page-link" data-th-attr="pageIndex=${i} - 1" href="javascript:void(0);">
+                        <span data-th-text="${i}"></span>
+                    </a>
+                </li>
+                <li data-th-classappend="*{last} ? 'disabled' : ''">
+                    <a href="javascript:void(0);" data-th-attr="pageIndex=${page.number} + 1" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Site footer -->
+    <footer class="footer">
+        <p>&copy; 2017 lee.</p>
+    </footer>
+
+</div> <!-- /container -->
+</body>
+</html>
