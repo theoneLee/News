@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SimMeg</title>
+    <script th:src="@{static/js/jquery.min.js}"></script>
+    <script th:src="@{static/js/bootstrap.min.js}"></script>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{static/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{static/css/jumbotron-narrow.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header">
+        <ul class="nav nav-pills pull-right" role="tablist">
+            <li role="presentation"><a th:href="@{/}">首页</a></li>
+            <!-- todo 如果登录了就显示用户名和注销；没有登录就显示登录和注册-->
+            <li role="presentation" th:if="${#httpSession.user}==null">
+                <a th:href="@{/login}">登录</a>
+            </li>
+            <li role="presentation" th:if="${#httpSession.user}!=null">
+                <a th:href="@{/user/detail(id=${#httpSession.user.id})}" th:text="${#httpSession.user.name}">用户名</a>
+            </li>
+        </ul>
+        <h3 class="text-muted">SimMeg</h3>
+    </div>
+
+    <br/><br/>
+    <!--在下面写新闻详情的模版-->
+    <div class="jumbotron">
+        <p class="lead" th:text="${news.title}">新闻标题</p>
+        <span th:text="'category:'+${news.category}">category:xxxx</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span th:text="'date:'+${news.date}">date:xxxx-xx-xx</span>
+        <br/><br/>
+        <p style="font-size:medium; text-align: left;" th:text="'    '+${news.content}">
+            &nbsp;&nbsp;&nbsp;&nbsp;日前，08级校友刘瀚阳译著的《游戏编程算法与技巧》一书出版，特向游戏系专任教师及图书馆赠阅。刘校友表示，感谢在校期间恩师罗林、刘生建、李俊琴在专业上的教导，特赠此书聊表谢意；也希望通过将此书经由图书馆，流通到更多游戏技术学习者和爱好者的手里，共同学习交流。
+        </p>
+    </div>
+    <div class="jumbotron" >
+        <p class="text-left" style="font-weight: bold;">评论:
+            <!--todo 这里使用bootstrap的模态框-->
+            <!--这个a标签的链接不需要包含用户信息，因为已经存在session中了，那么接受到这个请求后，如果session有用户，就利用这个用户作为评论的依据，如果没有就重定向到登录页面-->
+            <a class="btn btn-default" th:href="@{/news/{nid}/comment(nid=${news.id})}"
+               role="button" style="margin-left: 420px;padding: 6px 12px;font-size: 14px;">添加评论</a>
+        </p>
+
+        <br>
+        <!--以下是评论展示页-->
+        <div th:foreach="comment:${news.commentList}">
+            <p class="text-left" style="font-size: 16px" th:text="${comment.username}">用户名</p>
+            <h4 th:text="${comment.content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo</h4>
+            <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>-->
+            <p class="text-right" style="font-size: 16px" th:text="${comment.date}">时间</p>
+            <hr>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
