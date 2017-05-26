@@ -51,10 +51,28 @@
         <p class="text-left" style="font-weight: bold;">评论:
             <!--todo 这里使用bootstrap的模态框-->
             <!--这个a标签的链接不需要包含用户信息，因为已经存在session中了，那么接受到这个请求后，如果session有用户，就利用这个用户作为评论的依据，如果没有就重定向到登录页面-->
-            <a class="btn btn-default" th:href="@{/news/{nid}/comment(nid=${news.id})}"
+            <a class="btn btn-default" data-toggle="modal" data-target="#myModal"
                role="button" style="margin-left: 420px;padding: 6px 12px;font-size: 14px;">添加评论</a>
         </p>
-
+        <!--bootstrap的模态框 -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <!--todo 这个表格能不能正常提交 -->
+                    <form th:action="@{/news/{nid}/comment(nid=${news.id})}">
+                    <div class="modal-body">
+                        <textarea maxlength="50" minlength="1">content</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">comment</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <br>
         <!--以下是评论展示页-->
         <div th:foreach="comment:${news.commentList}">
