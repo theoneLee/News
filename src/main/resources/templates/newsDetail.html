@@ -39,7 +39,7 @@
     <!--在下面写新闻详情的模版-->
     <div class="jumbotron">
         <p class="lead" th:text="${news.title}">新闻标题</p>
-        <span th:text="'category:'+${news.category}">category:xxxx</span>
+        <span th:text="'category:'+${news.category.name}">category:xxxx</span>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span th:text="'date:'+${news.date}">date:xxxx-xx-xx</span>
         <br/><br/>

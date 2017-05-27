@@ -8,7 +8,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL auto_increment,
-  `categoryName` varchar(255) default NULL,
+  `name` varchar(255) default NULL,
   `flag` bit(1) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

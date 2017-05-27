@@ -70,7 +70,7 @@
                     <div class="carousel-caption">
                         <h1 id="title1" th:text="${news[0].title}">title1</h1>
                         <p id="content1" th:text="${news[0].content}">News Content 1</p>
-                        <p><a id="link1" class="btn btn-lg btn-primary" th:href="${news[0].link}" role="button">了解更多</a></p>
+                        <p><a id="link1" class="btn btn-lg btn-primary" th:href="@{/news/detail(id=${news[0].id})}" role="button">了解更多</a></p>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <div class="carousel-caption">
                         <h1 id="title2" th:text="${news[1].title}">Another example headline.</h1>
                         <p id="content2" th:text="${news[1].content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a id="link2" class="btn btn-lg btn-primary" th:href="${news[1].link}" role="button">了解更多</a></p>
+                        <p><a id="link2" class="btn btn-lg btn-primary" th:href="@{/news/detail(id=${news[1].id})}" role="button">了解更多</a></p>
                     </div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                     <div class="carousel-caption">
                         <h1 id="title3" th:text="${news[2].title}">One more for good measure.</h1>
                         <p id="content3" th:text="${news[2].content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a id="link3" class="btn btn-lg btn-primary" th:href="${news[2].link}" role="button">了解更多</a></p>
+                        <p><a id="link3" class="btn btn-lg btn-primary" th:href="@{/news/detail(id=${news[2].id})}" role="button">了解更多</a></p>
                     </div>
                 </div>
             </div>
@@ -99,8 +99,8 @@
                 <div class="container">
                     <div class="carousel-caption">
                         <h1 id="title4" th:text="${news[3].title}">One more for good measure.</h1>
-                        <p id="content4" th:text="${news[3].title}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                        <p><a id="link4" class="btn btn-lg btn-primary" th:href="${news[3].link}" role="button">了解更多</a></p>
+                        <p id="content4" th:text="${news[3].content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        <p><a id="link4" class="btn btn-lg btn-primary" th:href="@{/news/detail(id=${news[3].id})}" role="button">了解更多</a></p>
                     </div>
                 </div>
             </div>
