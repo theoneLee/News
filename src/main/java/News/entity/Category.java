@@ -1,8 +1,8 @@
 package News.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Lee on 2017/5/27 0027.
@@ -17,7 +17,7 @@ public class Category {
 
     //一方的fetch默认为eager，多方的默认为lazy
     @OneToMany(mappedBy = "category",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
-    private Set<News> newsList=new HashSet<News>();
+    private List<News> newsList=new ArrayList<News>();
 
     public Integer getId() {
         return id;
@@ -43,11 +43,11 @@ public class Category {
         this.flag = flag;
     }
 
-    public Set<News> getNewsList() {
+    public List<News> getNewsList() {
         return newsList;
     }
 
-    public void setNewsList(Set<News> newsList) {
+    public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
     }
 }

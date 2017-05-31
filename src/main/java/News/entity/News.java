@@ -1,7 +1,9 @@
 package News.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Lee on 2017/5/27 0027.
@@ -20,7 +22,10 @@ public class News {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    //todo 待加入comment
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.EAGER)
+    @JoinColumn(name="news_id")
+    private List<Comment> commentList=new ArrayList<>();
+
 
     public Integer getId() {
         return id;
@@ -68,5 +73,14 @@ public class News {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 }

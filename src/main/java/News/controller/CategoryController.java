@@ -1,5 +1,9 @@
 package News.controller;
 
+import News.entity.Category;
+import News.service.CategoryService;
+import News.service.NewsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +19,18 @@ import java.util.List;
 @Controller
 public class CategoryController {
 
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
+    NewsService newsService;
+
     @RequestMapping(value = "/category")
     public String getMoreCategory(@RequestParam(value = "name")String name,Model model){
         List<Category> categoryList=categoryService.getMoreCategory();//拿到更多分类，包含分类名和获取该分类下新闻的链接
         model.addAttribute("categoryList",categoryList);
-
-        model.addAttribute("page",newsService.getNewsByCategoryName(name));//使用spring data分页器接口
+        int page=0;//todo 这里的page是否要从前端请求获取，在https://my.oschina.net/waylau/blog/857292中是没有page参数的
+        model.addAttribute("page",newsService.getNewsByCategoryName(name,page));//使用spring data分页器接口
 
         return "category";
     }
