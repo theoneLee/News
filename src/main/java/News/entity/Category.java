@@ -8,7 +8,6 @@ import java.util.List;
  * Created by Lee on 2017/5/27 0027.
  */
 @Entity
-@Table(name = "_category")
 public class Category {
     @Id
     @GeneratedValue

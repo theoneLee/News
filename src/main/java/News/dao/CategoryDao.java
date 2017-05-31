@@ -16,4 +16,6 @@ public interface CategoryDao extends JpaRepository<Category,Long>{
     //@Query("select c from Category c where c.flag=false")
     List<Category> findByFlagFalse();
 
+    Category findByName(String name);
+
 }

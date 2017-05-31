@@ -1,6 +1,8 @@
 package News.service;
 
+import News.dao.CategoryDao;
 import News.dao.NewsDao;
+import News.entity.Category;
 import News.entity.Comment;
 import News.entity.News;
 import News.entity.User;
@@ -23,9 +25,13 @@ public class NewsService {
     @Autowired
     NewsDao newsDao;
 
+    @Autowired
+    CategoryDao categoryDao;
+
     public List<News> getIndexNews() {
         //拿到首页上最新的4条新闻，要包含id,标题，裁剪过的新闻内容
-        List<News> list=newsDao.findTop4ByCategory("hot",new Sort(Sort.Direction.DESC,"date"));
+        Category category=categoryDao.findByName("hot");
+        List<News> list=newsDao.findTop4ByCategory(category,new Sort(Sort.Direction.DESC,"date"));//todo 注意这里是根据Category这个实体来查询，无法直接通过categoryName来查询
         for (News news:list){
             news.setContent(news.getContent().substring(0,12));
         }

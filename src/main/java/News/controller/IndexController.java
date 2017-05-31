@@ -7,6 +7,7 @@ import News.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class IndexController {
 //        this.categoryService=categoryService;
 //    }
 
-    @RequestMapping(value = "/")
+    @GetMapping(value = "/")
     public String index(Model model){
         //从service拿到对应数据，然后封装到model
         List<Category> categoryList=categoryService.getMoreCategory();//拿到更多分类，包含分类名即可

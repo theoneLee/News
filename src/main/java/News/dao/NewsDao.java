@@ -1,5 +1,6 @@
 package News.dao;
 
+import News.entity.Category;
 import News.entity.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +18,8 @@ import java.util.List;
 @Repository
 public interface NewsDao extends JpaRepository<News,Long> {
 
-    List<News> findTop4ByCategory(String categoryName, Sort sort);//又要排序，又要限制结果数量，又要有查找条件
+
+    List<News> findTop4ByCategory(Category category, Sort sort);//又要排序，又要限制结果数量，又要有查找条件
 
     /**
      * 包含news且要包含commentList的

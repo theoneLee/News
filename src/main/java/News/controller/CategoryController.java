@@ -6,6 +6,7 @@ import News.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,7 +26,7 @@ public class CategoryController {
     @Autowired
     NewsService newsService;
 
-    @RequestMapping(value = "/category")
+    @GetMapping(value = "/category")
     public String getMoreCategory(@RequestParam(value = "name")String name,Model model){
         List<Category> categoryList=categoryService.getMoreCategory();//拿到更多分类，包含分类名和获取该分类下新闻的链接
         model.addAttribute("categoryList",categoryList);

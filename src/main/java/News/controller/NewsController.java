@@ -25,7 +25,7 @@ public class NewsController {
      * @param model
      * @return 返回一个包含news且要包含commentList的
      */
-    @RequestMapping(value = "/news/detail")
+    @GetMapping(value = "/news/detail")
     public String getNewsById(@RequestParam("id")String id, Model model){
         News news=newsService.getNewsById(id);
         model.addAttribute("news",news);
