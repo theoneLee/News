@@ -3,12 +3,14 @@ package News.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 /**
  * Created by Lee on 2017/5/31 0031.
  */
 @Entity
+@Table(name = "_comment")
 public class Comment {
     @Id
     @GeneratedValue

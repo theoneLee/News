@@ -3,12 +3,14 @@ package News.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 /**
  * Created by Lee on 2017/5/31 0031.
  */
 @Entity
+@Table(name = "_user")
 public class User {
     @Id
     @GeneratedValue
