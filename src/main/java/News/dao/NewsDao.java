@@ -26,8 +26,9 @@ public interface NewsDao extends JpaRepository<News,Long> {
      * @param id
      * @return
      */
-    @Query("select n from News n inner join fetch n.commentList where id=?1")//查询主对象时一并查询关联对象，注意在entity上的@Fetch注解也是有相关联的。
-    News findById(String id);
+    //@Query("select n from News n inner join fetch n.commentList where n.id=?1")//查询主对象时一并查询关联对象，注意在entity上的@Fetch注解也是有相关联的。注意这里的id是要指明哪一个对象
+    @Query("select n from News n where n.id=?1")
+    List<News> findById1(Integer id);
 
     /**
      * 分页

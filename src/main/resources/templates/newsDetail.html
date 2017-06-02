@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
     <title>SimMeg</title>
-    <script th:src="@{js/jquery.min.js}"></script>
-    <script th:src="@{js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
     <!-- Bootstrap core CSS -->
-    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 
     <!-- Custom styles for this template -->
-    <link th:href="@{css/jumbotron-narrow.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jumbotron-narrow.css}" rel="stylesheet"/>
 
 </head>
 
@@ -25,11 +25,11 @@
         <ul class="nav nav-pills pull-right" role="tablist">
             <li role="presentation"><a th:href="@{/}">首页</a></li>
             <!-- todo 如果登录了就显示用户名和注销；没有登录就显示登录和注册-->
-            <li role="presentation" th:if="${#httpSession.user}==null">
-                <a th:href="@{/login}">登录</a>
+            <li role="presentation" th:if="${session.user==null}">
+            <a th:href="@{/login}">登录</a>
             </li>
-            <li role="presentation" th:if="${#httpSession.user}!=null">
-                <a th:href="@{/user/detail(id=${#httpSession.user.id})}" th:text="${#httpSession.user.name}">用户名</a>
+            <li role="presentation" th:if="${session.user!=null}">
+                <a th:href="@{/user/detail(id=${session.user.id})}" th:text="${session.user.name}">用户名</a>
             </li>
         </ul>
         <h3 class="text-muted">SimMeg</h3>
@@ -61,26 +61,29 @@
                     <div class="modal-header">
                     </div>
                     <!--todo 这个表格能不能正常提交 -->
-                    <form th:action="@{/news/{nid}/comment(nid=${news.id})}">
+                    <form th:action="@{/news/{nid}/comment(nid=${news.id})}" th:type="">
                     <div class="modal-body">
                         <textarea maxlength="50" minlength="1">content</textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">comment</button>
+                        <button type="submit" class="btn btn-primary" >comment</button>
                     </div>
                     </form>
                 </div>
             </div>
         </div>
-        <br>
+        <br/>
         <!--以下是评论展示页-->
-        <div th:foreach="comment:${news.commentList}">
-            <p class="text-left" style="font-size: 16px" th:text="${comment.username}">用户名</p>
-            <h4 th:text="${comment.content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo</h4>
-            <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>-->
-            <p class="text-right" style="font-size: 16px" th:text="${comment.date}">时间</p>
-            <hr>
+        <div th:if="${not #lists.isEmpty(commentList)}" >
+            <!--注意thymeleaf标签是th:each，而不是th:foreach-->
+            <div th:each="comment : ${commentList}">
+                <p class="text-left" style="font-size: 16px" th:text="${comment.username==null ? ' ' : comment.username}">用户名</p>
+                <h4  th:text="${comment.content}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo</h4>
+                <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>-->
+                <p class="text-right" style="font-size: 16px"  th:text="${comment.date}">时间</p>
+                <hr/>
+            </div>
         </div>
 
     </div>

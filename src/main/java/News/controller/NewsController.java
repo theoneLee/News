@@ -26,9 +26,21 @@ public class NewsController {
      * @return 返回一个包含news且要包含commentList的
      */
     @GetMapping(value = "/news/detail")
-    public String getNewsById(@RequestParam("id")String id, Model model){
+    public String getNewsById(@RequestParam("id")String id, Model model,HttpSession httpSession){
         News news=newsService.getNewsById(id);
+        System.out.println("news:"+news.getTitle());
+
+        model.addAttribute("commentList",news.getCommentList());
+        news.setCommentList(null);
         model.addAttribute("news",news);
+//        if (httpSession.getAttribute("user")==null){//正常情况下session里面包含的是一个user
+//            httpSession.setAttribute("user","null");
+//        }
+        User user=new User();
+        user.setName("test");
+        user.setId(44);
+        httpSession.setAttribute("user",user);
+        //System.out.println("sessionId:"+httpSession.getId());
         return "newsDetail";
     }
 

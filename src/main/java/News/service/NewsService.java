@@ -45,7 +45,9 @@ public class NewsService {
      * @return
      */
     public News getNewsById(String id) {
-        News news=newsDao.findById(id);
+        List<News> list=newsDao.findById1(Integer.valueOf(id));
+        System.out.println("comment:"+list.get(0).getCommentList());
+        News news=list.get(0);
         return news;
     }
 
@@ -61,7 +63,7 @@ public class NewsService {
         comment.setUsername(user.getName());
         comment.setContent(content);
         comment.setDate(new Date());
-        News news=newsDao.findById(nid);
+        News news=newsDao.findById1(Integer.valueOf(nid)).get(0);
         news.getCommentList().add(comment);
         newsDao.save(news);//这里是相当于saveOrUpdate ，在开启CascadeType.MERGE时（http://docs.spring.io/spring-data/jpa/docs/1.11.3.RELEASE/reference/html/#jpa.entity-persistence）
     }
