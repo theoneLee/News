@@ -68,11 +68,11 @@
     </div>
     <!--todo 这里要测试-->
     <div class="jumbotron" id="container_more" th:object="${page}">
-        <!--todo 分页器+spring data分页器接口org.springframework.data.domain.Page -->
+        <!--分页器+spring data分页器接口org.springframework.data.domain.Page -->
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li data-th-classappend="*{first} ? 'disabled' : ''">
-                    <a href="javascript:void(0);" data-th-attr="pageIndex=${page.number} - 1" aria-label="Previous">
+                    <a th:href="@{/category(name=${page.content[0].category.name},page=${page.number}-1)}" data-th-attr="pageIndex=${page.number} - 1" aria-label="Previous">
                         <span aria-hidden="true">«</span>
                     </a>
                 </li>
@@ -80,12 +80,12 @@
                 <!-- 迭代生成页码 -->
                 <li data-th-each="i : ${#numbers.sequence(1, page.totalPages)}"
                     data-th-classappend="${(page.number + 1) eq i} ? 'active' : ''" >
-                    <a class="page-link" data-th-attr="pageIndex=${i} - 1" href="javascript:void(0);">
+                    <a class="page-link" data-th-attr="pageIndex=${i} - 1" th:href="@{/category(name=${page.content[0].category.name},page=${i}-1)}">
                         <span data-th-text="${i}"></span>
                     </a>
                 </li>
                 <li data-th-classappend="*{last} ? 'disabled' : ''">
-                    <a href="javascript:void(0);" data-th-attr="pageIndex=${page.number} + 1" aria-label="Next">
+                    <a th:href="@{/category(name=${page.content[0].category.name},page=${page.number}+1)}" data-th-attr="pageIndex=${page.number} + 1" aria-label="Next">
                         <span aria-hidden="true">»</span>
                     </a>
                 </li>

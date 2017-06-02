@@ -27,11 +27,11 @@ public class CategoryController {
     NewsService newsService;
 
     @GetMapping(value = "/category")
-    public String getMoreCategory(@RequestParam(value = "name")String name,Model model){
+    public String getMoreCategory(@RequestParam(value = "name")String name,@RequestParam(value = "page",defaultValue = "0")int page,Model model){
         List<Category> categoryList=categoryService.getMoreCategory();//拿到更多分类，包含分类名和获取该分类下新闻的链接
-        System.out.println("categoryListSize:"+categoryList.size());
+        //System.out.println("categoryListSize:"+categoryList.size());
         model.addAttribute("categoryList",categoryList);
-        int page=0;//todo 这里的page是否要从前端请求获取，在https://my.oschina.net/waylau/blog/857292中是没有page参数的
+        //int page=0;//todo 这里的page是否要从前端请求获取，在https://my.oschina.net/waylau/blog/857292中是没有page参数的
         model.addAttribute("page",newsService.getNewsByCategoryName(name,page));//使用spring data分页器接口
 
         return "category";
