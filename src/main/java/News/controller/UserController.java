@@ -25,7 +25,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user/login" ,method = RequestMethod.POST)
-    public String login(@RequestBody User user, HttpSession httpSession){
+    public String login(String name,String password, HttpSession httpSession){
+        User user=new User();
+        user.setName(name);
+        user.setPassword(password);
         User user1=userService.checkUser(user);//判断用户是否合法，合法就返回一个包含全部用户信息的user（注意密码项要置为null）
         if (user1!=null){
             httpSession.setAttribute("user",user1);
