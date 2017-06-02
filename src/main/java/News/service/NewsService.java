@@ -46,7 +46,7 @@ public class NewsService {
      */
     public News getNewsById(String id) {
         List<News> list=newsDao.findById1(Integer.valueOf(id));
-        System.out.println("comment:"+list.get(0).getCommentList());
+        //System.out.println("comment:"+list.get(0).getCommentList());
         News news=list.get(0);
         return news;
     }

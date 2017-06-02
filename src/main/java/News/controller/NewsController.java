@@ -28,30 +28,30 @@ public class NewsController {
     @GetMapping(value = "/news/detail")
     public String getNewsById(@RequestParam("id")String id, Model model,HttpSession httpSession){
         News news=newsService.getNewsById(id);
-        System.out.println("news:"+news.getTitle());
+        //System.out.println("news:"+news.getTitle());
 
         model.addAttribute("commentList",news.getCommentList());
         news.setCommentList(null);
         model.addAttribute("news",news);
-//        if (httpSession.getAttribute("user")==null){//正常情况下session里面包含的是一个user
-//            httpSession.setAttribute("user","null");
-//        }
-        User user=new User();
-        user.setName("test");
-        user.setId(44);
-        httpSession.setAttribute("user",user);
+//        User user=new User();
+//        user.setName("test");
+//        user.setId(44);
+//        httpSession.setAttribute("user",user);
         //System.out.println("sessionId:"+httpSession.getId());
         return "newsDetail";
     }
 
+    /**
+     *
+     * @param nid
+     * @param httpSession
+     * @param content 表单的name也要是一样参数名
+     * @return
+     */
     @RequestMapping(value = "/news/{nid}/comment",method = RequestMethod.POST)
-    public String comment(@PathVariable(name = "nid")String nid, HttpSession httpSession, @RequestBody String content){
+    public String comment(@PathVariable(name = "nid")String nid, HttpSession httpSession,String content){
         User user= (User) httpSession.getAttribute("user");
         if (user!=null){
-//            Comment comment=new Comment();
-//            comment.setUserName(user.getUserName());
-//            comment.setNews()
-            //todo
             newsService.comment(nid,user,content);//封装一个comment，然后持久化
             return "redirect:/news/detail?id="+nid;//该重定向到新闻页（使其评论可见）
         }else {

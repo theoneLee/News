@@ -61,9 +61,9 @@
                     <div class="modal-header">
                     </div>
                     <!--todo 这个表格能不能正常提交 -->
-                    <form th:action="@{/news/{nid}/comment(nid=${news.id})}" th:type="">
+                    <form th:action="@{/news/{nid}/comment(nid=${news.id})}" method="post" id="comment_form">
                     <div class="modal-body">
-                        <textarea maxlength="50" minlength="1">content</textarea>
+                        <textarea maxlength="50" minlength="1" th:name="content" form="comment_form">content</textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
