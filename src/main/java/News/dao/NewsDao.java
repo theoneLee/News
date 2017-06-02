@@ -32,9 +32,11 @@ public interface NewsDao extends JpaRepository<News,Long> {
 
     /**
      * 分页
+     * 因为是根据Category来查News，所以要根据cateogryName来找到对应的Category对象，然后作为参数传进来
      * @param category
      * @param pageable
      * @return
      */
-    Page<News> findByCategory(String category, Pageable pageable);
+    Page<News> findByCategory(Category category, Pageable pageable);
+
 }

@@ -70,6 +70,7 @@ public class NewsService {
 
     public Page<News> getNewsByCategoryName(String name,int page) {
         int size=5;
-        return newsDao.findByCategory(name,new PageRequest(page,size));
+        Category category=categoryDao.findByName(name);
+        return newsDao.findByCategory(category,new PageRequest(page,size));
     }
 }
