@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
     <title>SimMeg</title>
 
@@ -42,9 +42,11 @@
                                 type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             更多<span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" th:each="category:${categoryList}">
-                            <!--todo 请求遍历其他分类（获得url以及分类名，通过这个url可以拿到该分类的新闻list）-->
-                            <li><a th:href="@{/category(name=${category.name})}" th:text="${category.name}"></a></li>
+                        <ul class="dropdown-menu">
+                            <!--注意迭代标签要放在准备迭代的地方，比如在这里那么他会循环输出n个li标签，如果防在上面的ul上就只会输出n个ul，导致只有1个li-->
+                            <li th:each="category:${categoryList}">
+                                <a th:href="@{/category(name=${category.name})}" th:text="${category.name}"></a>
+                            </li>
                         </ul>
                     </div>
 
@@ -59,7 +61,7 @@
     <!--todo 这里显示该分类下每一条新闻，到最后有一个获取更多新闻的按钮 -->
 
     <div class="jumbotron" id="container" th:each="news:${page.getContent()}">
-        <div id="news_img" class="pull-left"><img src="img/test.png"></div>
+        <div id="news_img" class="pull-left"><img src="img/test.png"/></div>
         <h2><a id="news_title" th:href="@{/news/detail(id=${news.id})}" th:text="${news.title}"> Marketing stuff!</a></h2>
         <p id="news_content" class="lead" th:text="${#strings.substring(news.content,0,15)}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo</p>
         <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>-->

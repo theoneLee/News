@@ -68,9 +68,18 @@ public class NewsService {
         newsDao.save(news);//这里是相当于saveOrUpdate ，在开启CascadeType.MERGE时（http://docs.spring.io/spring-data/jpa/docs/1.11.3.RELEASE/reference/html/#jpa.entity-persistence）
     }
 
+    /**
+     * http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/domain/Page.html
+     * @param name
+     * @param page
+     * @return
+     */
     public Page<News> getNewsByCategoryName(String name,int page) {
         int size=5;
         Category category=categoryDao.findByName(name);
-        return newsDao.findByCategory(category,new PageRequest(page,size));
+        Page<News> pageNews=newsDao.findByCategory(category,new PageRequest(page,size));
+        System.out.println("TotalElements:"+pageNews.getTotalElements());
+        System.out.println("TotalPages:"+pageNews.getTotalPages());
+        return pageNews;
     }
 }

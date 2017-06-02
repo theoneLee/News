@@ -41,9 +41,11 @@
                                 type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             更多<span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu" th:each="category:${categoryList}">
-                            <!--todo 请求遍历其他分类（获得url以及分类名，通过这个url可以拿到该分类的新闻list）-->
-                            <li><a th:href="@{/category(name=${category.name})}" th:text="${category.name}"></a></li>
+                        <ul class="dropdown-menu" >
+                            <!--注意迭代标签要放在准备迭代的地方，比如在这里那么他会循环输出n个li标签，如果防在上面的ul上就只会输出n个ul，导致只有1个li-->
+                            <li th:each="category:${categoryList}">
+                                <a th:href="@{/category(name=${category.name})}" th:text="${category.name}"></a>
+                            </li>
                         </ul>
                     </div>
 
