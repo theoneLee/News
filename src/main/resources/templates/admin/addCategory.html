@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jumbotron-narrow.css}" rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a th:href="@{/admin/allCategory}">类型查看</a></li>
+                <li class="active"><a href="#">类型发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a th:href="@{/admin/allNews}">新闻查看</a></li>
+                <li><a th:href="@{/admin/addNews}">新闻发布</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a th:href="@{/admin/allUser}">用户查看</a></li>
+                <li><a th:href="@{/admin/addNewsManager}">添加新闻管理员</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <h2 class="sub-header">类型发布</h2>
+            <div class="table-responsive">
+                <form th:action="@{/admin/addCategory/post}" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">类型名</span>
+                        <input name="name" type="text" class="form-control" placeholder="待添加新闻类型名">
+                    </div>
+                    <br />
+                    <input class="form-control" type="submit" value="提交"/>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

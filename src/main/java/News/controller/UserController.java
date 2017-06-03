@@ -24,6 +24,13 @@ public class UserController {
         return "login";
     }
 
+    /**
+     * 拿到表单中的数据
+     * @param name 表单字段
+     * @param password 表单字段
+     * @param httpSession
+     * @return
+     */
     @RequestMapping(value = "/user/login" ,method = RequestMethod.POST)
     public String login(String name,String password, HttpSession httpSession){
         User user=new User();
@@ -34,7 +41,7 @@ public class UserController {
             httpSession.setAttribute("user",user1);
             return "redirect:/";//重定向到首页
         }
-        return "redirect:/login";//重定向到登录页
+        return "redirect:/login";//重定向到登录页 todo 提示登录失败
     }
 
 }

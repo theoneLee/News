@@ -78,8 +78,8 @@ public class NewsService {
         int size=5;
         Category category=categoryDao.findByName(name);
         Page<News> pageNews=newsDao.findByCategory(category,new PageRequest(page,size));
-        System.out.println("TotalElements:"+pageNews.getTotalElements());
-        System.out.println("TotalPages:"+pageNews.getTotalPages());
+        //System.out.println("TotalElements:"+pageNews.getTotalElements());
+        //System.out.println("TotalPages:"+pageNews.getTotalPages());
         return pageNews;
     }
 }
