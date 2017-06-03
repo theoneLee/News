@@ -13,7 +13,7 @@ public class Category {
     @GeneratedValue
     private Integer id;
     private String name;
-    private boolean flag;
+    private boolean flag;//flag为false不是固定分类
 
     //一方的fetch默认为eager，多方的默认为lazy
     @OneToMany(mappedBy = "category",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)

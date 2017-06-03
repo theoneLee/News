@@ -18,7 +18,7 @@ public class User {
     private String name;
     @NotNull
     private String password;
-    private String permission;
+    private String permission;//NOTADMIN，则表示有管理员权限
 
     public Integer getId() {
         return id;

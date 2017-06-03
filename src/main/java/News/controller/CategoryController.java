@@ -1,16 +1,21 @@
 package News.controller;
 
 import News.entity.Category;
+import News.entity.User;
 import News.service.CategoryService;
 import News.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+
+import static News.util.PermissionUtil.isPermission;
 
 
 /**
@@ -21,10 +26,12 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
 
     @Autowired
-    NewsService newsService;
+    private NewsService newsService;
+
+
 
     @GetMapping(value = "/category")
     public String getMoreCategory(@RequestParam(value = "name")String name,@RequestParam(value = "page",defaultValue = "0")int page,Model model){
@@ -36,5 +43,49 @@ public class CategoryController {
 
         return "category";
     }
+
+
+    @GetMapping(value = "/admin/addCategory")
+    public String addCategoryView(HttpSession httpSession){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)){//有权限
+            return "/admin/addCategory";//返回逻辑视图（/admin/addCategory.html）
+        }
+        return "redirect:/login";
+    }
+
+    /**
+     *
+     * @param name 表单提交数据的字段名
+     * @param httpSession
+     * @return
+     */
+    @PostMapping(value = "/admin/addCategory/post")
+    public String addCategory(String name,HttpSession httpSession){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)){//有权限
+            Category category=new Category();
+            category.setName(name);
+            category.setFlag(false);
+            categoryService.addCategory(category);
+            return "redirect:/admin/allCategory";//重定向到/admin/allCategory"，而不是返回一个视图(即：提交后返回一个查看刚才提交的页面)
+        }
+        return "redirect:/login";
+    }
+
+    @GetMapping(value = "/admin/allCategory")
+    public String allCategoryView(HttpSession httpSession, Model model){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            model.addAttribute("categoryList",categoryService.getMoreCategory());
+            return "/admin/allCategory";
+        }
+        return "redirect:/login";
+    }
+
+
 
 }

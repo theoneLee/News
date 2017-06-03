@@ -46,12 +46,13 @@
                 <form action="#" method="post">
                     <div class="input-group">
                         <span class="input-group-addon">新闻标题</span>
-                        <input type="text" class="form-control" placeholder="待添加新闻类型名">
+                        <input name="newsTitle" type="text" class="form-control" placeholder="待添加新闻类型名">
                     </div>
 
                     <div class="input-group">
                         <span class="input-group-addon">新闻类别</span>
-                        <select class="form-control">
+                        <select name="newsCategoryName" class="form-control">
+                            <!--todo 这里迭代所有分类的name-->
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -59,9 +60,10 @@
                             <option>5</option>
                         </select>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group" >
                         <span class="input-group-addon">新闻内容</span>
-                        <!--<textarea class="form-control" rows="8"></textarea> -->
+                        <!--<textarea name="newsContent" class="form-control" rows="8"></textarea> -->
+                        <!--todo 富文本编辑器怎么提交?-->
                         <div id="div1">
                             <p>请输入内容...</p>
                         </div>

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/login" ,method = RequestMethod.GET)
     public String loginView(){

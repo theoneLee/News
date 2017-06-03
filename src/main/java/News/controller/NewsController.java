@@ -2,6 +2,7 @@ package News.controller;
 
 import News.entity.News;
 import News.entity.User;
+import News.service.CategoryService;
 import News.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
+import static News.util.PermissionUtil.isPermission;
+
 /**
  * Created by Lee on 2017/5/26 0026.
  */
@@ -17,7 +20,10 @@ import javax.servlet.http.HttpSession;
 public class NewsController {
 
     @Autowired
-    NewsService newsService;
+    private NewsService newsService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      *
@@ -59,5 +65,54 @@ public class NewsController {
         }
     }
 
+
+    //获取某个分类下的所有新闻(选择select时，链接到一个新的url，包含categoryName的)
+    @GetMapping(value = "/admin/allNews")
+    public String allNewsView(@RequestParam(defaultValue = "hot") String categoryName,@RequestParam(value = "page",defaultValue = "0")int page,Model model,HttpSession httpSession){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            model.addAttribute("page",newsService.getNewsByCategoryName(categoryName,page));//使用spring data分页器接口
+            return "/admin/allNews";
+        }
+        return "redirect:/login";//重定向到登录页
+    }
+
+    /**
+     *
+     * @param httpSession
+     * @param model 包含所有分类name，然后迭代显示在select标签中
+     * @return
+     */
+    @GetMapping(value = "/admin/addNews")
+    public String addNewsView(HttpSession httpSession,Model model){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            model.addAttribute("categoryList",categoryService.getAllCategoryName());
+            return "/admin/addNews";
+        }
+        return "redirect:/login";//重定向到登录页
+    }
+
+
+    /**
+     *
+     * @param httpSession
+     * @param newsTitle
+     * @param newsCategoryName todo 这里的标签内容怎么接受？
+     * todo 还有富文本 新闻内容的处理，图片的处理
+     *
+     * @return
+     */
+    @PostMapping(value = "/admin/addNews/post")
+    public String addNews(HttpSession httpSession,String newsTitle,String newsCategoryName,){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            //todo 将拿到的数据封装成News，然后关联category并持久化
+        }
+        return "redirect:/login";//重定向到登录页
+    }
 
 }
