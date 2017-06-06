@@ -82,4 +82,8 @@ public class NewsService {
         //System.out.println("TotalPages:"+pageNews.getTotalPages());
         return pageNews;
     }
+
+    public void addNews(News news) {
+        newsDao.save(news);
+    }
 }

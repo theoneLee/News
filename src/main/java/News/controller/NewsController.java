@@ -42,11 +42,6 @@ public class NewsController {
         model.addAttribute("commentList",news.getCommentList());
         news.setCommentList(null);
         model.addAttribute("news",news);
-//        User user=new User();
-//        user.setName("test");
-//        user.setId(44);
-//        httpSession.setAttribute("user",user);
-        //System.out.println("sessionId:"+httpSession.getId());
         return "newsDetail";
     }
 
@@ -127,4 +122,5 @@ public class NewsController {
         return "redirect:/login";//重定向到登录页
     }
 
+    //todo update delete
 }

@@ -22,4 +22,25 @@ public class CategoryService {
         List<Category> categoryList=categoryDao.findByFlagFalse();
         return categoryList;
     }
+
+    public void addCategory(Category category) {
+        categoryDao.save(category);
+    }
+
+    public void deleteCategoryByName(String categoryName) {
+        categoryDao.delete(categoryDao.findByName(categoryName));
+    }
+
+    public Category getCategoryById(String cid) {
+        return categoryDao.findOne(Long.valueOf(cid));
+    }
+
+
+    public Category getCategoryByCourseName(String newsCategoryName) {
+        return categoryDao.findByName(newsCategoryName);
+    }
+
+    public List<Category> getAllCategoryName() {
+        return categoryDao.findAll();
+    }
 }
