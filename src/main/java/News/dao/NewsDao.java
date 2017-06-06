@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Lee on 2017/5/31 0031.
  */
 @Repository
-public interface NewsDao extends JpaRepository<News,Long> {
+public interface NewsDao extends JpaRepository<News,Integer> {
 
 
     List<News> findTop4ByCategory(Category category, Sort sort);//又要排序，又要限制结果数量，又要有查找条件

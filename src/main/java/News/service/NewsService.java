@@ -83,7 +83,24 @@ public class NewsService {
         return pageNews;
     }
 
+    public Page<News> getNewsByCategoryName(String name,int page,int size) {
+        Category category=categoryDao.findByName(name);
+        Page<News> pageNews=newsDao.findByCategory(category,new PageRequest(page,size));
+        //System.out.println("TotalElements:"+pageNews.getTotalElements());
+        //System.out.println("TotalPages:"+pageNews.getTotalPages());
+        return pageNews;
+    }
+
     public void addNews(News news) {
+        newsDao.save(news);
+    }
+
+    public void deleteNews(String nid) {
+        newsDao.delete(Integer.valueOf(nid));
+    }
+
+    public void updateNews(News news) {
+
         newsDao.save(news);
     }
 }

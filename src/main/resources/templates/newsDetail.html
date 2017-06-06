@@ -49,10 +49,10 @@
         </p>
         <script th:inline="javascript">
             var c=[[${news.content}]];
-            document.getElementById('content').innerHTML=c;//将后台保存的新闻内容（html）直接显示在content中
-
+            document.getElementById('content').innerHTML=c;//todo 富文本  将后台保存的新闻内容（html）直接显示在content中
         </script>
     </div>
+    
     <div class="jumbotron" >
         <p class="text-left" style="font-weight: bold;">评论:
             <!--这里使用bootstrap的模态框-->

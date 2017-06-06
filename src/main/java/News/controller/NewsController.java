@@ -73,7 +73,8 @@ public class NewsController {
         }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
-            model.addAttribute("page",newsService.getNewsByCategoryName(categoryName,page));//使用spring data分页器接口
+            model.addAttribute("categoryList",categoryService.getAllCategoryName());
+            model.addAttribute("page",newsService.getNewsByCategoryName(categoryName,page,100));//不使用spring data分页，所以每次取足够多
             return "/admin/allNews";
         }
         return "redirect:/login";//重定向到登录页
@@ -101,8 +102,10 @@ public class NewsController {
 
 
     /**
+     * todo 富文本
      * 图片直接以base64的方式直接作为html内容直接传给newsContent容器
      * 目前将图片和富文本作为html内容直接传递给数据库保存，在查看时直接将html内容取出来，然后js来将内容赋值给对应的容器来展示
+     * 注意
      * @param httpSession
      * @param newsTitle
      * @param newsCategoryName
@@ -131,5 +134,57 @@ public class NewsController {
         return "redirect:/login";//重定向到登录页
     }
 
-    //todo update delete
+
+    @GetMapping(value = "/admin/updateNews")
+    public String updateNewsView(HttpSession httpSession,Model model,@RequestParam(name = "nid")String nid){
+        User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            model.addAttribute("categoryList",categoryService.getAllCategoryName());
+            model.addAttribute("newsTemp",newsService.getNewsById(nid));//todo 将news数据填充到界面
+            return "/admin/updateNews";
+        }
+        return "redirect:/login";//重定向到登录页
+    }
+
+    @PostMapping(value = "/admin/updateNews/post")
+    public String updateNews(HttpSession httpSession,String newsTitle,String newsCategoryName,String newsContent,@RequestParam(name = "nid")String nid){
+        User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            //将拿到的数据封装成News，然后关联category并持久化
+            News news=newsService.getNewsById(nid);
+            news.setTitle(newsTitle);
+            news.setNewsManagerName(user.getName());
+            news.setDate(new Date());
+            news.setContent(newsContent);
+
+            Category category=categoryService.getCategoryByCourseName(newsCategoryName);
+            news.setCategory(category);
+
+            newsService.updateNews(news);
+            return "redirect:/admin/allNews";
+        }
+        return "redirect:/login";//重定向到登录页
+    }
+
+    @GetMapping(value = "/admin/deleteNews")
+    public String deleteNews(HttpSession httpSession,@RequestParam(name = "nid")String nid){
+        User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            newsService.deleteNews(nid);
+            return "redirect:/admin/allNews";
+        }
+        return "redirect:/login";
+    }
 }

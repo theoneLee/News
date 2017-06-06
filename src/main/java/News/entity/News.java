@@ -18,7 +18,7 @@ public class News {
     private String newsManagerName;
     @Lob
     @Column(length = 10001000)
-    private String content;
+    private String content;//todo 富文本
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH},fetch = FetchType.EAGER,optional = false)
     @JoinColumn(name = "category_id")

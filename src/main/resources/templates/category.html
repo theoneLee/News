@@ -58,15 +58,14 @@
     </div>
 
 
-    <!--todo 这里显示该分类下每一条新闻，到最后有一个获取更多新闻的按钮 -->
 
     <div class="jumbotron" id="container" th:each="news:${page.getContent()}">
-        <div id="news_img" class="pull-left"><img src="img/test.png"/></div>
+        <!--<div id="news_img" class="pull-left"><img src="img/test.png"/></div>-->
         <h2><a id="news_title" th:href="@{/news/detail(id=${news.id})}" th:text="${news.title}"> Marketing stuff!</a></h2>
         <p id="news_content" class="lead" th:text="${#strings.substring(news.content,0,15)}">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo</p>
         <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>-->
     </div>
-    <!--todo 这里要测试-->
+    <!--todo 分页-->
     <div class="jumbotron" id="container_more" th:object="${page}">
         <!--分页器+spring data分页器接口org.springframework.data.domain.Page -->
         <nav aria-label="Page navigation">

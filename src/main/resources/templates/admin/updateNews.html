@@ -43,12 +43,11 @@
 
             <h2 class="sub-header">新闻发布</h2>
             <div class="table-responsive">
-                <form th:action="@{/admin/addNews/post}" method="post">
+                <form th:action="@{/admin/updateNews/post(nid=${newsTemp.id})}" method="post">
                     <div class="input-group">
                         <span class="input-group-addon">新闻标题</span>
-                        <input name="newsTitle" type="text" class="form-control" placeholder="待添加新闻类型名"/>
+                        <input name="newsTitle" type="text" class="form-control" placeholder="待添加新闻类型名" th:value="${newsTemp.title}"/>
                     </div>
-
                     <div class="input-group">
                         <span class="input-group-addon">新闻类别</span>
                         <select name="newsCategoryName" class="form-control">
@@ -62,14 +61,17 @@
                     <div class="input-group" >
                         <span class="input-group-addon">新闻内容</span>
                         <input id="content" type="hidden" name="newsContent" value=""/>
-                        <!--todo 富文本编辑器怎么提交?目前将图片和富文本作为html内容直接传递给数据库保存，在查看时直接将html内容取出来，然后js来将内容赋值给对应的容器来展示-->
                         <div id="div1">
-                            <p>请输入内容...</p>
+                            <p id="ccc"></p>
                         </div>
                     </div>
                     <br/>
                     <input id="btn1" class="form-control" type="submit" value="提交"/>
                 </form>
+                <script th:inline="javascript">
+                    var c=[[${newsTemp.content}]];
+                    document.getElementById('ccc').innerHTML=c;
+                </script>
 
             </div>
         </div>
@@ -82,48 +84,48 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/wangEditor.min.js}"></script>
 <script type="text/javascript">
-        var E = window.wangEditor;
-        var editor = new E('#div1');
-        // 自定义菜单配置
-        editor.customConfig.menus = [
-            'image',
-            'bold',  // 粗体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'strikeThrough',  // 删除线
-            'foreColor',  // 文字颜色
-            'backColor',  // 背景颜色
-            'code',  // 插入代码
-            'justify',  // 对齐方式
-            'quote',  // 引用
-            'emoticon',  // 表情
-            'undo',  // 撤销
-            'redo'  // 重复
-        ];
+    var E = window.wangEditor;
+    var editor = new E('#div1');
+    // 自定义菜单配置
+    editor.customConfig.menus = [
+        'image',
+        'bold',  // 粗体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'code',  // 插入代码
+        'justify',  // 对齐方式
+        'quote',  // 引用
+        'emoticon',  // 表情
+        'undo',  // 撤销
+        'redo'  // 重复
+    ];
 
-        // 上传图片（举例）
-        // editor.customConfig.uploadImgServer = '/upload';todo 富文本
-        editor.customConfig.uploadImgShowBase64 = true;//使用 base64 编码直接将图片插入到内容中
+    // 上传图片（举例）
+    // editor.customConfig.uploadImgServer = '/upload';
+    editor.customConfig.uploadImgShowBase64 = true;//使用 base64 编码直接将图片插入到内容中
 
-//        // 配置自定义参数（举例）
-//        editor.config.uploadParams = {
-//            token: 'abcdefg',
-//            user: 'wangfupeng1988'
-//        };
+    //        // 配置自定义参数（举例）
+    //        editor.config.uploadParams = {
+    //            token: 'abcdefg',
+    //            user: 'wangfupeng1988'
+    //        };
 
-//        // 设置 headers（举例）
-//        editor.config.uploadHeaders = {
-//            'Accept' : 'text/x-json'
-//        };
+    //        // 设置 headers（举例）
+    //        editor.config.uploadHeaders = {
+    //            'Accept' : 'text/x-json'
+    //        };
 
-        // 隐藏掉插入网络图片功能。
-        //editor.customConfig.showLinkImg = false;
-        editor.create();
+    // 隐藏掉插入网络图片功能。
+    //editor.customConfig.showLinkImg = false;
+    editor.create();
 
-        document.getElementById('btn1').addEventListener('click', function () {//todo 富文本
-            // 读取 html,赋值给content容器
-            document.getElementById('content').value=editor.txt.html();
-        }, false);
+    document.getElementById('btn1').addEventListener('click', function () {
+        // 读取 html,赋值给content容器
+        document.getElementById('content').value=editor.txt.html();
+    }, false);
 </script>
 </body>
 </html>
