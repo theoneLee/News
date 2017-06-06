@@ -17,7 +17,7 @@ public class Category {
 
     //一方的fetch默认为eager，多方的默认为lazy
     @OneToMany(mappedBy = "category",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REMOVE},fetch = FetchType.LAZY)
-    private List<News> newsList=new ArrayList<News>();
+    private List<News> newsList=new ArrayList<News>();//在hibernate上用HashSet确实难受。遍历元素只能用foreach。这个好多了
 
     public Integer getId() {
         return id;

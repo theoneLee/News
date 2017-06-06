@@ -1,5 +1,6 @@
 package News.controller;
 
+import News.entity.Category;
 import News.entity.News;
 import News.entity.User;
 import News.service.CategoryService;
@@ -10,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+
+import java.util.Date;
 
 import static News.util.PermissionUtil.isPermission;
 
@@ -106,11 +109,20 @@ public class NewsController {
      * @return
      */
     @PostMapping(value = "/admin/addNews/post")
-    public String addNews(HttpSession httpSession,String newsTitle,String newsCategoryName,){
+    public String addNews(HttpSession httpSession,String newsTitle,String newsCategoryName,String newsManagerName,String newsContent){
         User user= (User) httpSession.getAttribute("user");
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
             //todo 将拿到的数据封装成News，然后关联category并持久化
+            News news=new News();
+            news.setTitle(newsTitle);
+            news.setNewsManagerName(newsManagerName);
+            news.setDate(new Date());
+            news.setContent(newsContent);
+            Category category=categoryService.getCategoryByCourseName(newsCategoryName);
+            news.setCategory(category);
+            newsService.addNews(news);
+            return "redirect:/admin/allNews";
         }
         return "redirect:/login";//重定向到登录页
     }

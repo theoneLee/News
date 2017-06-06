@@ -7,10 +7,7 @@ import News.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -86,6 +83,42 @@ public class CategoryController {
         return "redirect:/login";
     }
 
+    @GetMapping(value = "/admin/deleteCategory")
+    public String deleteCategory(HttpSession httpSession,@RequestParam(value = "name")String categoryName){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)) {//有权限
+            categoryService.deleteCategoryByName(categoryName);
+            return "redirect:/admin/allCategory";
+        }
+        return "redirect:/login";
+    }
 
+    @GetMapping(value = "/admin/updateCategory")
+    public String updateCategoryView(HttpSession httpSession,Model model, @RequestParam(value = "cid") String cid){
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)){//有权限
+            Category category=categoryService.getCategoryById(cid);
+            model.addAttribute("category",category);
+            return "/admin/updateCategory";//返回逻辑视图（/admin/addCategory.html）
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping(value = "/admin/updateCategory/post")
+    public String updateCategory(String name, HttpSession httpSession, @RequestParam(value = "cid") String cid){
+
+        User user= (User) httpSession.getAttribute("user");
+        String permission=user.getPermission();
+        if (isPermission(permission)){//有权限
+            Category category=categoryService.getCategoryById(cid);
+            category.setName(name);
+            category.setFlag(false);
+            categoryService.addCategory(category);
+            return "redirect:/admin/allCategory";//重定向到/admin/allCategory"，而不是返回一个视图(即：提交后返回一个查看刚才提交的页面)
+        }
+        return "redirect:/login";
+    }
 
 }
