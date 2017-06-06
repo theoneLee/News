@@ -22,8 +22,8 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">类型查看</a></li>
-                <li ><a th:href="@{/admin/addCategory}">类型发布</a></li>
+                <li><a th:href="@{/admin/allCategory}">类型查看</a></li>
+                <li class="active"><a href="#">类型发布</a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li><a th:href="@{/admin/allNews}">新闻查看</a></li>
@@ -34,31 +34,24 @@
                 <li><a th:href="@{/admin/addNewsManager}">添加新闻管理员</a></li>
             </ul>
         </div>
-
-
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h2 class="sub-header">类型查看</h2>
+
+            <h2 class="sub-header">类型更新</h2>
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>分类名</th>
-                        <th>更新操作</th>
-                        <th>删除操作</th>
-                    </tr>
-                    </thead>
-                    <tr th:each="category:${categoryList}">
-                        <td th:text="${categoryStat.count}">1,001</td>
-                        <td th:text="${category.name}">Lorem</td>
-                        <td><a th:href="@{/admin/updateCategory(cid=${category.id})}">更新</a></td>
-                        <td><a th:href="@{/admin/deleteCategory(cid=${category.id})}">删除</a></td>
-                    </tr>
-                </table>
+                <form th:action="@{/admin/updateCategory/post(cid=${category.id})}" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon">类型名</span>
+                        <input name="name" type="text" class="form-control" placeholder="待添加新闻类型名" th:value="${category.name}"/>
+                    </div>
+                    <br />
+                    <input class="form-control" type="submit" value="提交"/>
+                </form>
+
             </div>
         </div>
     </div>
 </div>
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

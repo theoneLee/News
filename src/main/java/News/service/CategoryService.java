@@ -32,7 +32,7 @@ public class CategoryService {
     }
 
     public Category getCategoryById(String cid) {
-        return categoryDao.findOne(Long.valueOf(cid));
+        return categoryDao.findOne(Integer.valueOf(cid));
     }
 
 
@@ -42,5 +42,9 @@ public class CategoryService {
 
     public List<Category> getAllCategoryName() {
         return categoryDao.findAll();
+    }
+
+    public void deleteCategoryById(Integer cid) {
+        categoryDao.delete(cid);
     }
 }

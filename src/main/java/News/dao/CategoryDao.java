@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Lee on 2017/5/27 0027.
  */
 @Repository
-public interface CategoryDao extends JpaRepository<Category,Long>{
+public interface CategoryDao extends JpaRepository<Category,Integer>{
 
     //@Query("select c from Category c where c.flag=false")
     List<Category> findByFlagFalse();

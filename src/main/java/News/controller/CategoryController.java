@@ -87,14 +87,14 @@ public class CategoryController {
     }
 
     @GetMapping(value = "/admin/deleteCategory")
-    public String deleteCategory(HttpSession httpSession,@RequestParam(value = "name")String categoryName){
+    public String deleteCategory(HttpSession httpSession,@RequestParam(value = "cid")Integer cid){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
             return "redirect:/login";
         }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
-            categoryService.deleteCategoryByName(categoryName);
+            categoryService.deleteCategoryById(cid);
             return "redirect:/admin/allCategory";
         }
         return "redirect:/login";
