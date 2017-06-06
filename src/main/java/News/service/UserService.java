@@ -24,6 +24,7 @@ public class UserService {
         User trueUser=userDao.findByName(reqName);
         if (reqPassword!=null&&reqPassword.equals(trueUser.getPassword())){
             trueUser.setPassword("");
+            //System.out.println(trueUser.getPermission());
             return trueUser;
         }
         return null;

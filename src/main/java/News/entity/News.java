@@ -16,6 +16,8 @@ public class News {
     private String title;
     private Date date;
     private String newsManagerName;
+    @Lob
+    @Column(length = 10001000)
     private String content;
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH},fetch = FetchType.EAGER,optional = false)

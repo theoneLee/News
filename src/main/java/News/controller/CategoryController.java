@@ -75,6 +75,9 @@ public class CategoryController {
     @GetMapping(value = "/admin/allCategory")
     public String allCategoryView(HttpSession httpSession, Model model){
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
             model.addAttribute("categoryList",categoryService.getMoreCategory());
@@ -86,6 +89,9 @@ public class CategoryController {
     @GetMapping(value = "/admin/deleteCategory")
     public String deleteCategory(HttpSession httpSession,@RequestParam(value = "name")String categoryName){
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
             categoryService.deleteCategoryByName(categoryName);
@@ -97,6 +103,9 @@ public class CategoryController {
     @GetMapping(value = "/admin/updateCategory")
     public String updateCategoryView(HttpSession httpSession,Model model, @RequestParam(value = "cid") String cid){
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)){//有权限
             Category category=categoryService.getCategoryById(cid);
@@ -108,8 +117,10 @@ public class CategoryController {
 
     @PostMapping(value = "/admin/updateCategory/post")
     public String updateCategory(String name, HttpSession httpSession, @RequestParam(value = "cid") String cid){
-
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)){//有权限
             Category category=categoryService.getCategoryById(cid);

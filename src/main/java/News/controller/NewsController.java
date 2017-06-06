@@ -68,6 +68,9 @@ public class NewsController {
     @GetMapping(value = "/admin/allNews")
     public String allNewsView(@RequestParam(defaultValue = "hot") String categoryName,@RequestParam(value = "page",defaultValue = "0")int page,Model model,HttpSession httpSession){
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
             model.addAttribute("page",newsService.getNewsByCategoryName(categoryName,page));//使用spring data分页器接口
@@ -85,6 +88,9 @@ public class NewsController {
     @GetMapping(value = "/admin/addNews")
     public String addNewsView(HttpSession httpSession,Model model){
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
             model.addAttribute("categoryList",categoryService.getAllCategoryName());
@@ -95,23 +101,26 @@ public class NewsController {
 
 
     /**
-     *
+     * 图片直接以base64的方式直接作为html内容直接传给newsContent容器
+     * 目前将图片和富文本作为html内容直接传递给数据库保存，在查看时直接将html内容取出来，然后js来将内容赋值给对应的容器来展示
      * @param httpSession
      * @param newsTitle
-     * @param newsCategoryName todo 这里的标签内容怎么接受？
-     * todo 还有富文本 新闻内容的处理，图片的处理
+     * @param newsCategoryName
      *
      * @return
      */
     @PostMapping(value = "/admin/addNews/post")
-    public String addNews(HttpSession httpSession,String newsTitle,String newsCategoryName,String newsManagerName,String newsContent){
+    public String addNews(HttpSession httpSession,String newsTitle,String newsCategoryName,String newsContent){
         User user= (User) httpSession.getAttribute("user");
+        if (user==null){
+            return "redirect:/login";
+        }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
-            //todo 将拿到的数据封装成News，然后关联category并持久化
+            //将拿到的数据封装成News，然后关联category并持久化
             News news=new News();
             news.setTitle(newsTitle);
-            news.setNewsManagerName(newsManagerName);
+            news.setNewsManagerName(user.getName());
             news.setDate(new Date());
             news.setContent(newsContent);
             Category category=categoryService.getCategoryByCourseName(newsCategoryName);
