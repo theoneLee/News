@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <title>SimMeg</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/jumbotron-narrow.css}" rel="stylesheet"/>
+
+</head>
+
+<body>
+
+<div class="container">
+    <div class="header">
+        <ul class="nav nav-pills pull-right" role="tablist">
+            <li role="presentation"><a th:href="@{/}">首页</a></li>
+        </ul>
+        <h3 class="text-muted">SimMeg</h3>
+    </div>
+
+
+    <div class="input-group">
+        <input type="text" class="form-control" id="search"/>
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">搜索 <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a id="a1" onclick="fun1()" href="/news/name">根据标题搜索</a></li>
+                <li><a id="a2" onclick="fun2()" href="/news/time">根据时间范围搜索</a></li>
+            </ul>
+        </div><!-- /btn-group -->
+    </div><!-- /input-group -->
+
+    <!--在下面写搜索显示结果的模版-->
+
+
+
+    <script>
+        function fun1() {
+            var s=$("#search").val();
+            $("#a1").attr("href","/news/name?name="+s);
+        }
+        function fun2() {
+            var s=$("#search").val();
+            $("#a2").attr("href","/news/time?time="+s);
+        }
+    </script>
+
+    <br /><br />
+    <div>
+        <div class="jumbotron" th:each="news:${newsList1}">
+            <p class="lead"><a th:href="@{/news/detail(id=${news.id})}" th:text="${news.title}">新闻标题</a></p>
+            <span th:text="'time:'+${news.date}">time:xxxx-xx-xx</span>
+        </div>
+    </div>
+</div>
+</body>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</html>

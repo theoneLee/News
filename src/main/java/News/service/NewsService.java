@@ -13,6 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -102,5 +105,42 @@ public class NewsService {
     public void updateNews(News news) {
 
         newsDao.save(news);
+    }
+
+    public List<News> getNewsByNewsName(String name) {
+
+        List<News> list=newsDao.findByTitleLike(name+"%");
+        //System.out.println("newsListNameService:"+list);
+        for (News n:list){
+            n.setCommentList(null);
+        }
+        return list;
+    }
+
+
+    public List<News> getNewsByNewsTime(String time) {
+        List<Date> list=string2Date(time);
+        List<News> newsList=newsDao.findByDateIsBetween(list.get(0),list.get(1));
+
+        for (News n:newsList){
+            n.setCommentList(null);
+        }
+        return newsList;
+    }
+
+    private List<Date> string2Date(String s){
+        String s1=s.split("~")[0];
+        String s2=s.split("~")[1];
+        List<Date> list=new ArrayList<>();
+        //System.out.println("date1:"+s1);
+        //System.out.println("date2:"+s2);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            list.add(sdf.parse(s1));
+            list.add(sdf.parse(s2));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

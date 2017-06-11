@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 import java.util.Date;
+import java.util.List;
 
 import static News.util.PermissionUtil.isPermission;
 
@@ -43,6 +44,35 @@ public class NewsController {
         news.setCommentList(null);
         model.addAttribute("news",news);
         return "newsDetail";
+    }
+
+    @GetMapping("/search")
+    public String getSearchView(){
+        return "searchResult";
+    }
+
+    @GetMapping("/news/name")
+    public String getNewsByName(@RequestParam("name")String name, Model model){
+        List<News> newsList=newsService.getNewsByNewsName(name);//模糊查询
+        //System.out.println("newsList(Name):"+newsList);
+        model.addAttribute("newsList1",newsList);
+        return "searchResult";
+    }
+
+
+    /**
+     * 时间查询格式为yyyy-MM-dd~yyyy-MM-dd
+     * @param time
+     * @param model
+     * @return
+     */
+    @GetMapping("/news/time")
+    public String getNewsByTime(@RequestParam("time")String time, Model model){
+        //根据时间段查询
+        List<News> newsList=newsService.getNewsByNewsTime(time);//模糊查询
+        //System.out.println("timeList:"+newsList);
+        model.addAttribute("newsList1",newsList);
+        return "searchResult";
     }
 
     /**
@@ -187,4 +217,7 @@ public class NewsController {
         }
         return "redirect:/login";
     }
+
+
+
 }

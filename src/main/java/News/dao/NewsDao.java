@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,4 +40,8 @@ public interface NewsDao extends JpaRepository<News,Integer> {
      */
     Page<News> findByCategory(Category category, Pageable pageable);
 
+    //@Query("select n from News n where n.title like ?1")
+    List<News> findByTitleLike(String title);
+
+    List<News> findByDateIsBetween(Date date,Date date1);
 }
