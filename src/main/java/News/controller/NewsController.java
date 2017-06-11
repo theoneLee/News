@@ -62,6 +62,7 @@ public class NewsController {
 
     /**
      * 时间查询格式为yyyy-MM-dd~yyyy-MM-dd
+     * 比如：2017-05-19~2017-05-21
      * @param time
      * @param model
      * @return

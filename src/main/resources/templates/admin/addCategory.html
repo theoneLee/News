@@ -15,6 +15,28 @@
     <!-- Custom styles for this template -->
     <link th:href="@{/css/dashboard.css}" rel="stylesheet"/>
     <link th:href="@{/css/jumbotron-narrow.css}" rel="stylesheet"/>
+
+    <script type="text/javascript">
+
+        function validate_required(field,alerttxt)
+        {
+            with (field)
+            {
+                if (value==null||value=="")
+                {alert(alerttxt);return false}
+                else {return true}
+            }
+        }
+
+        function validate_form(thisform)
+        {
+            with (thisform)
+            {
+                if (validate_required(name,"不能为空")==false)
+                {name.focus();return false}
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -38,7 +60,7 @@
 
             <h2 class="sub-header">类型发布</h2>
             <div class="table-responsive">
-                <form th:action="@{/admin/addCategory/post}" method="post">
+                <form th:action="@{/admin/addCategory/post}" onsubmit="return validate_form(this)" method="post">
                     <div class="input-group">
                         <span class="input-group-addon">类型名</span>
                         <input name="name" type="text" class="form-control" placeholder="待添加新闻类型名"/>

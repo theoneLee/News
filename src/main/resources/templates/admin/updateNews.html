@@ -20,6 +20,32 @@
             height: 350px;
         }
     </style>
+
+    <script type="text/javascript">
+
+        function validate_required(field,alerttxt)
+        {
+            with (field)
+            {
+                if (value==null||value=="")
+                {alert(alerttxt);return false}
+                else {return true}
+            }
+        }
+
+        function validate_form(thisform)
+        {
+            with (thisform)
+            {
+                if (validate_required(newsTitle,"标题不能为空")==false)
+                {newsTitle.focus();return false}
+                if (validate_required(newsContent,"内容不能为空")==false)
+                {newsContent.focus();return false}
+
+
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -43,7 +69,7 @@
 
             <h2 class="sub-header">新闻发布</h2>
             <div class="table-responsive">
-                <form th:action="@{/admin/updateNews/post(nid=${newsTemp.id})}" method="post">
+                <form th:action="@{/admin/updateNews/post(nid=${newsTemp.id})}" onsubmit="return validate_form(this)" method="post">
                     <div class="input-group">
                         <span class="input-group-addon">新闻标题</span>
                         <input name="newsTitle" type="text" class="form-control" placeholder="待添加新闻类型名" th:value="${newsTemp.title}"/>
