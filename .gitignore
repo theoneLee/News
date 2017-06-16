@@ -8,6 +8,7 @@
 out
 gen### Maven template
 target/
+rebel.xml
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup

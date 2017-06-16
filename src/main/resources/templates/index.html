@@ -56,6 +56,32 @@
 
     </div>
 
+    <br/>
+    <!--搜索栏-->
+    <div class="input-group">
+        <input type="text" class="form-control" id="search"/>
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">搜索 <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li><a id="a1" onclick="fun1()" href="/news/name">根据标题搜索</a></li>
+                <li><a id="a2" onclick="fun2()" href="/news/time">根据时间范围搜索</a></li>
+            </ul>
+        </div><!-- /btn-group -->
+    </div><!-- /input-group -->
+
+    <br/>
+    <script>
+        function fun1() {
+            var s=$("#search").val();
+            $("#a1").attr("href","/news/name?name="+s);
+        }
+        function fun2() {
+            var s=$("#search").val();
+            $("#a2").attr("href","/news/time?time="+s);
+        }
+    </script>
+
+
     <!--首页有一个滚动页 （有一个固定分类为热点，取得前4条新闻）要求滚动条图片大小1920*393 -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
