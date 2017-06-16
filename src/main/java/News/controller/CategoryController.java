@@ -4,12 +4,14 @@ import News.entity.Category;
 import News.entity.User;
 import News.service.CategoryService;
 import News.service.NewsService;
+import News.util.annotation.NotStringEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import static News.util.PermissionUtil.isPermission;
@@ -59,7 +61,7 @@ public class CategoryController {
      * @return
      */
     @PostMapping(value = "/admin/addCategory/post")
-    public String addCategory(String name,HttpSession httpSession){
+    public String addCategory(@NotStringEmpty String name, HttpSession httpSession){
         User user= (User) httpSession.getAttribute("user");
         String permission=user.getPermission();
         if (isPermission(permission)){//有权限
@@ -116,7 +118,7 @@ public class CategoryController {
     }
 
     @PostMapping(value = "/admin/updateCategory/post")
-    public String updateCategory(String name, HttpSession httpSession, @RequestParam(value = "cid") String cid){
+    public String updateCategory(@NotStringEmpty String name, HttpSession httpSession, @RequestParam(value = "cid") String cid){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
             return "redirect:/login";

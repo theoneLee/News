@@ -5,6 +5,7 @@ import News.entity.News;
 import News.entity.User;
 import News.service.CategoryService;
 import News.service.NewsService;
+import News.util.annotation.NotStringEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,7 +85,7 @@ public class NewsController {
      * @return
      */
     @RequestMapping(value = "/news/{nid}/comment",method = RequestMethod.POST)
-    public String comment(@PathVariable(name = "nid")String nid, HttpSession httpSession,String content){
+    public String comment(@PathVariable(name = "nid")String nid, HttpSession httpSession,@NotStringEmpty String content){
         User user= (User) httpSession.getAttribute("user");
         if (user!=null){
             newsService.comment(nid,user,content);//封装一个comment，然后持久化
@@ -144,7 +145,7 @@ public class NewsController {
      * @return
      */
     @PostMapping(value = "/admin/addNews/post")
-    public String addNews(HttpSession httpSession,String newsTitle,String newsCategoryName,String newsContent){
+    public String addNews(HttpSession httpSession,@NotStringEmpty String newsTitle,@NotStringEmpty String newsCategoryName,@NotStringEmpty String newsContent){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
             return "redirect:/login";
@@ -182,7 +183,8 @@ public class NewsController {
     }
 
     @PostMapping(value = "/admin/updateNews/post")
-    public String updateNews(HttpSession httpSession,String newsTitle,String newsCategoryName,String newsContent,@RequestParam(name = "nid")String nid){
+    public String updateNews(HttpSession httpSession,@NotStringEmpty String newsTitle,@NotStringEmpty String newsCategoryName,
+                             @NotStringEmpty String newsContent,@RequestParam(name = "nid")String nid){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
             return "redirect:/login";
