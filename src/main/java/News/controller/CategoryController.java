@@ -47,7 +47,11 @@ public class CategoryController {
     @GetMapping(value = "/admin/addCategory")
     public String addCategoryView(HttpSession httpSession){
         User user= (User) httpSession.getAttribute("user");
-        if (isPermission(user.getPermission())){//有权限
+        String permission=user.getPermission();
+        if (permission==null){
+            return "redirect:/login";
+        }
+        if (isPermission(permission)){//有权限
             return "/admin/addCategory";//返回逻辑视图（/admin/addCategory.html）
         }
         return "redirect:/login";
