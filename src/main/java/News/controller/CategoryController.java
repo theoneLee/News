@@ -47,15 +47,14 @@ public class CategoryController {
     @GetMapping(value = "/admin/addCategory")
     public String addCategoryView(HttpSession httpSession){
         User user= (User) httpSession.getAttribute("user");
-        String permission=user.getPermission();
-        if (isPermission(permission)){//有权限
+        if (isPermission(user.getPermission())){//有权限
             return "/admin/addCategory";//返回逻辑视图（/admin/addCategory.html）
         }
         return "redirect:/login";
     }
 
     /**
-     *
+     * //todo 将session的验证权限的代码，使用aop来实现
      * @param name 表单提交数据的字段名
      * @param httpSession
      * @return
@@ -74,6 +73,7 @@ public class CategoryController {
         return "redirect:/login";
     }
 
+    //todo 将session的验证权限的代码，使用aop来实现
     @GetMapping(value = "/admin/allCategory")
     public String allCategoryView(HttpSession httpSession, Model model){
         User user= (User) httpSession.getAttribute("user");
@@ -88,6 +88,7 @@ public class CategoryController {
         return "redirect:/login";
     }
 
+    //todo 将session的验证权限的代码，使用aop来实现
     @GetMapping(value = "/admin/deleteCategory")
     public String deleteCategory(HttpSession httpSession,@RequestParam(value = "cid")Integer cid){
         User user= (User) httpSession.getAttribute("user");
@@ -117,6 +118,7 @@ public class CategoryController {
         return "redirect:/login";
     }
 
+    //todo 将session的验证权限的代码，使用aop来实现
     @PostMapping(value = "/admin/updateCategory/post")
     public String updateCategory(@NotStringEmpty String name, HttpSession httpSession, @RequestParam(value = "cid") String cid){
         User user= (User) httpSession.getAttribute("user");
