@@ -2,8 +2,10 @@ package News.controller;
 
 import News.entity.User;
 import News.service.UserService;
+import News.util.annotation.NotStringEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +34,7 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/user/login" ,method = RequestMethod.POST)
-    public String login(String name,String password, HttpSession httpSession){
+    public String login(@NotStringEmpty String name, @NotStringEmpty String password, HttpSession httpSession, Model model){
         User user=new User();
         user.setName(name);
         user.setPassword(password);
@@ -41,7 +43,8 @@ public class UserController {
             httpSession.setAttribute("user",user1);
             return "redirect:/";//重定向到首页
         }
-        return "redirect:/login";//重定向到登录页 todo 提示登录失败
+
+        return "redirect:/login?error";//重定向到登录页 todo 提示登录失败
     }
 
 
