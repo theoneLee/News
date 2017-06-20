@@ -47,14 +47,13 @@ public class CategoryController {
     @GetMapping(value = "/admin/addCategory")
     public String addCategoryView(HttpSession httpSession){
         User user= (User) httpSession.getAttribute("user");
-        String permission=user.getPermission();
-        if (permission==null){
-            return "redirect:/login";
+        if (user==null){//这里不能跟以前那样直接取user.getPermission()，因为user是null时，会仍然会出现异常，自己这里的校验代码无法生效
+            return "redirect:/login?error";
         }
-        if (isPermission(permission)){//有权限
+        if (isPermission(user.getPermission())){//有权限
             return "/admin/addCategory";//返回逻辑视图（/admin/addCategory.html）
         }
-        return "redirect:/login";
+        return "redirect:/login?error";
     }
 
     /**
@@ -74,7 +73,7 @@ public class CategoryController {
             categoryService.addCategory(category);
             return "redirect:/admin/allCategory";//重定向到/admin/allCategory"，而不是返回一个视图(即：提交后返回一个查看刚才提交的页面)
         }
-        return "redirect:/login";
+        return "redirect:/login?error";
     }
 
     //todo 将session的验证权限的代码，使用aop来实现
@@ -89,7 +88,7 @@ public class CategoryController {
             model.addAttribute("categoryList",categoryService.getMoreCategory());
             return "/admin/allCategory";
         }
-        return "redirect:/login";
+        return "redirect:/login?error";
     }
 
     //todo 将session的验证权限的代码，使用aop来实现
@@ -97,21 +96,21 @@ public class CategoryController {
     public String deleteCategory(HttpSession httpSession,@RequestParam(value = "cid")Integer cid){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
-            return "redirect:/login";
+            return "redirect:/login?error";
         }
         String permission=user.getPermission();
         if (isPermission(permission)) {//有权限
             categoryService.deleteCategoryById(cid);
             return "redirect:/admin/allCategory";
         }
-        return "redirect:/login";
+        return "redirect:/login?error";
     }
 
     @GetMapping(value = "/admin/updateCategory")
     public String updateCategoryView(HttpSession httpSession,Model model, @RequestParam(value = "cid") String cid){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
-            return "redirect:/login";
+            return "redirect:/login?error";
         }
         String permission=user.getPermission();
         if (isPermission(permission)){//有权限
@@ -119,7 +118,7 @@ public class CategoryController {
             model.addAttribute("category",category);
             return "/admin/updateCategory";//返回逻辑视图（/admin/addCategory.html）
         }
-        return "redirect:/login";
+        return "redirect:/login?error";
     }
 
     //todo 将session的验证权限的代码，使用aop来实现
@@ -127,7 +126,7 @@ public class CategoryController {
     public String updateCategory(@NotStringEmpty String name, HttpSession httpSession, @RequestParam(value = "cid") String cid){
         User user= (User) httpSession.getAttribute("user");
         if (user==null){
-            return "redirect:/login";
+            return "redirect:/login?error";
         }
         String permission=user.getPermission();
         if (isPermission(permission)){//有权限
@@ -137,7 +136,7 @@ public class CategoryController {
             categoryService.addCategory(category);
             return "redirect:/admin/allCategory";//重定向到/admin/allCategory"，而不是返回一个视图(即：提交后返回一个查看刚才提交的页面)
         }
-        return "redirect:/login";
+        return "redirect:/login?error";
     }
 
 }

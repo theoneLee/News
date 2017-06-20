@@ -44,7 +44,7 @@ public class UserController {
             return "redirect:/";//重定向到首页
         }
 
-        return "redirect:/login?error";//重定向到登录页 todo 提示登录失败
+        return "redirect:/login?error";//重定向到登录页,提示登录失败(前端有一个标签，如果param.error存在就展示)
     }
 
 

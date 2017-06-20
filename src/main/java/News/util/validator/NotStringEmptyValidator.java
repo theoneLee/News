@@ -17,8 +17,10 @@ public class NotStringEmptyValidator implements ConstraintValidator<NotStringEmp
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value!=null&&!value.equals("")){
+            System.out.println("校验已运行：true");
             return true;
         }
+        System.out.println("校验已运行：false");
         return false;
     }
 }
